@@ -1,0 +1,17 @@
+describe collision;
+
+select count(objectid), sum(objectid), avg(objectid), min(objectid), max(objectid) 
+from collision;
+
+select count(distinct WEATHER) from collision;
+select distinct WEATHER from collision;
+
+
+
+select distinct EXCEPTRSNCODE, EXCEPTRSNDESC from collision;
+
+select count(EXCEPTRSNCODE) from collision where EXCEPTRSNCODE LIKE "NEI";
+
+select count(EXCEPTRSNCODE) from collision where EXCEPTRSNCODE LIKE "";
+
+show databases;

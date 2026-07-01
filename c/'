@@ -1,0 +1,59 @@
+#include <stdbool.h>
+#include <stdio.h>
+
+bool isPrime(int num, bool divisor) {
+  if (num <= 1) {
+    if (divisor)
+      printf("'%d' is less than or equal to 1\n", num);
+    return false;
+  }
+
+  if (num != 2 && num % 2 == 0) {
+    if (divisor)
+      printf("'%d' divisible by 2\n", num);
+    return false;
+  }
+
+  if (num != 3 && num % 3 == 0) {
+    if (divisor)
+      printf("'%d' divisible by 3\n", num);
+    return false;
+  }
+
+  if (num == 2 || num == 3)
+    return true;
+
+  //  NOTE: Main loop for checking other divisors.
+
+  /* We begin with `i = 5` and loop until `i * i` is greater than num (only need
+   * to check up to the square root of num). We increment i by 6 each loop,
+   * checking only i and i + 2 because any number > 3 and not divisible by 2 or
+   * 3 can be expressed in the form of 6k ± 1. If num is divisible by any of
+   * these values (i or i + 2), we return false as num is not prime.
+   */
+
+  for (int i = 5; i * i <= num; i += 6) {
+    if (num % i == 0 || num % (i + 2) == 0) {
+      if (divisor)
+        printf("'%d' is divisible by %d\n", num, i);
+      return false;
+    }
+  }
+
+  // Number is prime if all checks pass.
+  return true;
+}
+
+int main() {
+  int count = 0;
+
+  for (int i = 0; i <= 1000; i++)
+    if (isPrime(i, false)) {
+      printf("%d,", i);
+      count++;
+    }
+  printf("\n");
+  printf("Count: %d\n", count);
+
+  return 0;
+}

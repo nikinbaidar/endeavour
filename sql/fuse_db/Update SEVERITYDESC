@@ -1,0 +1,25 @@
+
+select distinct SDOT_COLCODE, SDOT_COLDESC 
+from collision
+order by SDOT_COLCODE;
+
+select count(SEVERITYDESC) as "count (Injury Collision)" 
+from collision WHERE SEVERITYDESC LIKE "Injury Collision";
+
+select count(SEVERITYDESC) as "count (Serious Injury Collison)" 
+from collision 
+WHERE SEVERITYDESC LIKE "Serious Injury Collision";
+
+-- TODO [X] change "Serious Injury Collision" -> "Injuriy Collison" in collision.SEVERITYDESC
+
+update collision
+set SEVERITYDESC = "Injury Collision"
+where SEVERITYDESC LIKE "Serious Injury Collision";
+
+
+SELECT *
+FROM collision
+INTO OUTFILE ''
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n';

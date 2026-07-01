@@ -1,0 +1,51 @@
+create table spare_parts (
+    part_number varchar(15),
+    description varchar(80),
+    stock int,
+    instrument_id varchar(15),
+    foreign key (instrument_id) references instrument(id),
+    primary key (part_number)
+);
+
+create table instrument (
+    id VARCHAR(15),
+    type VARCHAR(20),
+    name VARCHAR(20),
+    model VARCHAR(30),
+    manufacturer VARCHAR(15),
+    foreign key (manufacturer) references manufacturer(id),
+    primary key (id)
+);
+
+
+create table manufacturer (
+    id varchar(15),
+    name varchar(15),
+    country varchar(2),
+    primary key (id)
+);
+
+create table client (
+    name varchar(30),
+    client_id varchar(15),
+    address varchar(15),
+    instrument_id varchar(15),
+    installation_date date,
+    serial_number int,
+    foreign key (instrument_id) references instruments(id),
+    primary key (client_id, serial_number)
+);
+
+alter table clients
+modify column name varchar(35);
+
+alter table clients
+rename column  client_id to id;
+
+show tables;
+
+rename table client to clients;
+
+describe clients;
+
+drop table manufacturer;

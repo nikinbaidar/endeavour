@@ -1,0 +1,2 @@
+select count(objectid), sum(objectid), avg(objectid), min(objectid), max(objectid) from collision;
+

@@ -1,0 +1,69 @@
+select * from instruments;
+select * from spare_parts;
+
+select name, model, id from instruments where name like "selectra%";
+
+-- Check Spare parts
+select i.model, s.part_number, s.description, s.stock, s.remarks
+from spare_parts s
+left join instruments i on s.instrument_id = i.id
+where s.instrument_id = 'bca-02' and s.description like "%%";
+
+update spare_parts set
+stock = 1
+where part_number = "1513-053";
+
+SELECT * from clients c 
+WHERE  instrument_id like "BCA%%";
+
+
+SELECT COUNT(*) AS total_rows
+FROM (
+  SELECT c.name, c.address, c.district, i.model, c.installation_date, c.serial_number
+  FROM clients c
+  LEFT JOIN instruments i 
+  ON c.instrument_id = i.id
+  WHERE district NOT IN ("Kathmandu", "Lalitpur", "Bhaktapur")
+  ORDER BY c.name
+) AS subquery;
+
+update clients set
+installation_date = "2024-04-24", serial_number="24-4507"
+where name like "PPHL%%";
+
+
+select c.name, c.address, c.district, i.model 
+from clients c
+left join instruments i on c.instrument_id = i.id
+where district in ("Kathmandu", "Lalitpur", "Bhaktapur")
+order by name;
+
+select c.name, c.address, i.model, c.installation_date, c.serial_number
+into outfile '/home/nikin/clients_outside_valley.csv' fields terminated by ',' enclosed by '"' LINES TERMINATED BY '\n'
+from clients c
+left join instruments i on c.instrument_id = i.id
+where i.manufacturer = "0001" and district not in ("Kathmandu", "Lalitpur", "Bhaktapur")
+order by name;
+
+select c.name, c.address, i.model, c.installation_date, c.serial_number
+into outfile '/home/nikin/clients_inside_valley.csv' fields terminated by ',' enclosed by '"' LINES TERMINATED BY '\n'
+from clients c
+left join instruments i on c.instrument_id = i.id
+where i.manufacturer = "0001" and district in ("Kathmandu", "Lalitpur", "Bhaktapur")
+order by name;
+
+DESCRIBE clients;
+
+SELECT name, address, district, instrument_id, installation_date, serial_number 
+FROM clients
+ORDER BY name;
+
+select * from manufacturer;
+
+update manufacturer
+set id = "10-0001"
+where id = "0001";
+
+
+-- TODO To export query results into a csv, paste the following line between the SELECT and the FROM clauses.
+-- into outfile '/home/nikin/clients.csv' fields terminated by ',' enclosed by '"' LINES TERMINATED BY '\n'
