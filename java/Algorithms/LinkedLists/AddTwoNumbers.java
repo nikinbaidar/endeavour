@@ -36,32 +36,32 @@ class AddTwoNumbers{
     }
 
     public ListNode reverseKGroup(ListNode head, int k) {
-
-        // First, check if we have k nodes to work with
         ListNode temp = head;
-        for (int i = 0; i < k; i++) {
-            if (temp == null) return head; // Not enough nodes
+
+        /* Check if k-nodes exists */
+        for (int i=0; i<k; i++) {
+            if (temp == null) {
+                return head;
+            }
             temp = temp.next;
         }
 
-        this.printls(head);
+        ListNode previous_node = null;
+        ListNode current_node = head;
+        ListNode next_node;
 
-        // Process the group
-        ListNode prev = null;
-        ListNode curr = head;
-
-        // Reverse first k nodes
-        for (int i = 0; i < k; i++) {
-            ListNode next = curr.next;
-            curr.next = prev;
-            prev = curr;
-            curr = next;
+        /* Reverse k-nodes */
+        for (int i=0; i<k; i++) {
+            next_node = current_node.next;
+            current_node.next = previous_node;
+            previous_node = current_node;
+            current_node = next_node;
         }
 
-        // Recursively process remaining groups
-        head.next = reverseKGroup(curr, k);
+        /* Do that recursively */
+        head.next = reverseKGroup(current_node, k);
 
-        return prev;
+        return previous_node;
 
     }
 
@@ -122,8 +122,8 @@ class AddTwoNumbers{
         // System.out.print("l1 ");
         // obj.printls(l1);
 
-        obj.reverseKGroup(l1, 2);
-        // obj.printls(obj.reverseKGroup(l1, 2));
+        ListNode result = obj.reverseKGroup(l1, 2);
+        obj.printls(result);
 
     }
 }
